@@ -1,5 +1,5 @@
-import { cart, removeFromCart } from '../data/cart';
-import { products } from '../data/products';
+import { cart, removeFromCart } from '../data/cart.js';
+import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
 let cartSummaryHTML = '';
@@ -15,7 +15,10 @@ cart.forEach((cartItem) => {
         }
     });
 
-    `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+    console.log(productId);
+    console.log(matchingProduct);
+
+    cartSummaryHTML += `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
@@ -38,7 +41,7 @@ cart.forEach((cartItem) => {
                   <span class="update-quantity-link link-primary">
                     Update
                   </span>
-                  <span class="delete-quantity-link link-primary js-delete-link" data-product-id=" ${matchingProduct.id}">
+                  <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
                     Delete
                   </span>
                 </div>
