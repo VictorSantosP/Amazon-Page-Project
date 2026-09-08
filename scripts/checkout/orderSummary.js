@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
+import { Cart } from '../../data/cart-class.js';
 import { products, getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import  dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
@@ -9,7 +9,9 @@ import { renderPaymentSummary } from './paymentSummary.js';
 export function renderOrderSummary (){
   let cartSummaryHTML = '';
 
-  cart.forEach((cartItem) => {
+  const cart = new Cart('main-cart');
+
+  cart.cartItems.forEach((cartItem) => {
     const productId = cartItem.productId;
 
     const matchingProduct = getProduct(productId)
@@ -114,7 +116,7 @@ export function renderOrderSummary (){
   .forEach((link) => {
       link.addEventListener('click', () =>{
           const productId = link.dataset.productId;
-          removeFromCart(productId);
+          cart.removeFromCart(productId);
           const container = document.querySelector(
               `.js-cart-item-container-${productId}`
           )
@@ -128,7 +130,7 @@ export function renderOrderSummary (){
     .forEach((element) => {
       element.addEventListener('click', () => {
         const {productId, deliveryOptionId} = element.dataset;
-        updateDeliveryOption(productId, deliveryOptionId);
+        cart.updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummary();
         renderPaymentSummary();
       }); 
