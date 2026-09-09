@@ -52,6 +52,10 @@ export class Cart {
 
     }
 
+    loadFromStorage() {
+        this.#loadFromStorage();
+    }
+
     removeFromCart(productId) {
         const newCart = [];
         this.cartItems.forEach((cartItem) => {
@@ -83,6 +87,7 @@ export class Cart {
 
 };
 
+export const cart = new Cart('main-cart');
 
 
 

@@ -1,4 +1,4 @@
-import { Cart } from '../../data/cart-class.js';
+import { cart } from '../../data/cart-class.js';
 import { products, getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import  dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
@@ -8,8 +8,6 @@ import { renderPaymentSummary } from './paymentSummary.js';
 
 export function renderOrderSummary (){
   let cartSummaryHTML = '';
-
-  const cart = new Cart('main-cart');
 
   cart.cartItems.forEach((cartItem) => {
     const productId = cartItem.productId;
@@ -44,7 +42,7 @@ export function renderOrderSummary (){
                 ${matchingProduct.name}
                 </div>
                 <div class="product-price">
-                $${formatCurrency(matchingProduct.priceCents)}
+                ${matchingProduct.getPrice()}
                 </div>
                 <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                 <span>
