@@ -1,18 +1,18 @@
 import { formatCurrency } from '../scripts/utils/money.js'
 
-export function getProduct(productId){
+export function getProduct(productId) {
   let matchingProduct;
 
-      products.forEach((product) =>{
-          if (product.id === productId){
-              matchingProduct = product;
-          }
-      });
+  products.forEach((product) => {
+    if (product.id === productId) {
+      matchingProduct = product;
+    }
+  });
 
   return matchingProduct;
- }
- 
- class Product {
+}
+
+class Product {
   id;
   image;
   name;
@@ -41,20 +41,20 @@ export function getProduct(productId){
 }
 
 const product1 = new Product({
-    id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-    rating: {
-      stars: 4.5,
-      count: 87
-    },
-    priceCents: 1090,
-    keywords: [
-      "socks",
-      "sports",
-      "apparel"
-    ]
-  });
+  id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+  image: "images/products/athletic-cotton-socks-6-pairs.jpg",
+  name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+  rating: {
+    stars: 4.5,
+    count: 87
+  },
+  priceCents: 1090,
+  keywords: [
+    "socks",
+    "sports",
+    "apparel"
+  ]
+});
 
 
 class Clothing extends Product {
@@ -74,6 +74,28 @@ class Clothing extends Product {
   }
 }
 
+export let products = [];
+
+export function loadProducts(fun) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    products = JSON.parse(xhr.response).map((productDetails) => {
+
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+
+      return new Product(productDetails);
+    });
+
+    fun();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+}
+/*
  export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -740,4 +762,4 @@ class Clothing extends Product {
   }
 
   return new Product(productDetails);
-});
+});*/
